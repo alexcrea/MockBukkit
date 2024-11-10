@@ -10,7 +10,7 @@ import java.util.Map;
 public class ColorableArmorMetaMock extends ArmorMetaMock implements ColorableArmorMeta
 {
 
-	private Integer color;
+	private @Nullable Integer color;
 
 	static final Color DEFAULT_LEATHER_COLOR = Color.fromRGB(0xA06540);
 
