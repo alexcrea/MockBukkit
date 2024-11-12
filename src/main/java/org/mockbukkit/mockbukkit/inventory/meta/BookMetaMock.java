@@ -1,5 +1,11 @@
 package org.mockbukkit.mockbukkit.inventory.meta;
 
+import com.google.common.collect.ImmutableList;
+import net.kyori.adventure.text.ComponentBuilderApplicable;
+import net.kyori.adventure.text.ComponentCompaction;
+import net.kyori.adventure.text.ComponentIteratorType;
+import net.kyori.adventure.text.TextComponent;
+import net.kyori.adventure.text.serializer.legacy.LegacyComponentSerializer;
 import org.mockbukkit.mockbukkit.exception.UnimplementedOperationException;
 import com.google.common.base.Preconditions;
 import com.google.common.base.Strings;
@@ -25,9 +31,9 @@ import java.util.Objects;
 public class BookMetaMock extends ItemMetaMock implements BookMeta
 {
 
-	private @Nullable String title;
-	private @NotNull List<String> pages = new ArrayList<>();
-	private @Nullable String author;
+	private @Nullable Component title;
+	private @NotNull List<Component> pages = new ArrayList<>();
+	private @Nullable Component author;
 	private @Nullable Generation generation = null;
 
 	/**
@@ -47,9 +53,9 @@ public class BookMetaMock extends ItemMetaMock implements BookMeta
 	{
 		super(meta);
 
-		this.title = meta.getTitle();
-		this.author = meta.getAuthor();
-		this.pages = new ArrayList<>(meta.getPages());
+		this.title = meta.title();
+		this.author = meta.author();
+		this.pages = new ArrayList<>(meta.pages());
 		this.generation = meta.getGeneration();
 	}
 
@@ -84,7 +90,7 @@ public class BookMetaMock extends ItemMetaMock implements BookMeta
 	@Override
 	public boolean hasTitle()
 	{
-		return !Strings.isNullOrEmpty(this.title);
+		return title != null && title.equals(Component.empty());
 	}
 
 	@Override
@@ -96,57 +102,89 @@ public class BookMetaMock extends ItemMetaMock implements BookMeta
 	@Override
 	public @Nullable Component title()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return title;
 	}
 
 	@Override
 	public @This @NotNull BookMeta title(@Nullable Component title)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		this.title = title;
+		return this;
 	}
 
 	@Override
 	public @Nullable Component author()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return author;
 	}
 
 	@Override
 	public @This @NotNull BookMeta author(@Nullable Component author)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		this.author = author;
+		return this;
 	}
 
 	@Override
 	public @Unmodifiable @NotNull List<Component> pages()
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		return ImmutableList.copyOf(pages); //TODO check paper before pr
 	}
 
 	@Override
 	public @NotNull Book pages(@NotNull List<Component> pages)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		this.pages.clear();
+		this.pages.addAll(pages);
+		return this;
 	}
 
 	@Override
 	public @NotNull Component page(int page)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		// TODO CHECK range check on paper before pr
+		Preconditions.checkArgument(this.isValidPage(page), "Invalid page number");
+		return this.pages.get(page);
 	}
 
 	@Override
 	public void page(int page, @NotNull Component data)
 	{
-		// TODO Auto-generated method stub
-		throw new UnimplementedOperationException();
+		// TODO CHECK paper parity
+		if (!this.isValidPage(page))
+		{
+			throw new IllegalArgumentException("Invalid page number " + page + "/" + this.pages.size());
+		}
+		if(!(data instanceof TextComponent textComponent))
+		{
+			throw new IllegalArgumentException("Invalid book data"); //TODO TEST ESPECIALLY HERE
+		}
+		else
+		{
+			Component newText;
+			if (!data.equals(Component.empty()))
+			{
+				textComponent.toBuilder().app
+				data.chi;
+				newText = text.length() > 32767 ? text.substring(0, 32767) : text;
+			}
+			else
+			{
+				newText = Component.empty();
+			}
+			this.pages.set(page - 1, new);
+		}
+	}
+
+	@NotNull
+	public Component trunkateComponent(@NotNull TextComponent data, int size)
+	{
+		TextComponent
+		data.examinableProperties().forEach(
+				test -> {
+					()
+				}
+		);
 	}
 
 	@Override
